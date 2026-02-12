@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li><a href="learning-roadmap.html">🚀 Learning Roadmap</a></li>
+        <li class="active"><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <h1>Settings</h1>
+
+      <div class="settings-card">
+
+        <!-- Email Notifications -->
+        <div class="setting-row">
+          <div>
+            <h3>Email Notifications</h3>
+            <p>Receive updates and tips via email.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="emailNotif" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Dark Mode -->
+        <div class="setting-row">
+          <div>
+            <h3>Dark Mode</h3>
+            <p>Enable dark theme.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="darkMode" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <hr>
+
+        <!-- Auto Resume Analysis -->
+        <div class="setting-row">
+          <div>
+            <h3>Auto Resume Analysis</h3>
+            <p>Automatically analyze new resumes.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="autoAnalysis" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+        <p id="saveMsg" style="color:#4caf50; margin-top:10px; display:none;">✅ Settings saved successfully!</p>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Load saved settings on page load
+    function loadSettings() {
+      const settings = JSON.parse(localStorage.getItem("settings") || "{}");
+
+      if (settings.emailNotif !== undefined)
+        document.getElementById("emailNotif").checked = settings.emailNotif;
+      if (settings.darkMode !== undefined)
+        document.getElementById("darkMode").checked = settings.darkMode;
+      if (settings.autoAnalysis !== undefined)
+        document.getElementById("autoAnalysis").checked = settings.autoAnalysis;
+    }
+
+    // Apply dark mode toggle immediately on change
+    document.getElementById("darkMode").addEventListener("change", function () {
+      if (this.checked) {
+        document.body.classList.remove("light-mode");
+      } else {
+        document.body.classList.add("light-mode");
+      }
+    });
+
+    // Save settings to localStorage
+    function saveSettings() {
+      const settings = {
+        emailNotif: document.getElementById("emailNotif").checked,
+        darkMode: document.getElementById("darkMode").checked,
+        autoAnalysis: document.getElementById("autoAnalysis").checked,
+      };
+
+      localStorage.setItem("settings", JSON.stringify(settings));
+
+      // Apply dark mode immediately
+      if (settings.darkMode) {
+        document.body.classList.remove("light-mode");
+      } else {
+        document.body.classList.add("light-mode");
+      }
+
+      // Show confirmation
+      const msg = document.getElementById("saveMsg");
+      msg.style.display = "block";
+      setTimeout(() => { msg.style.display = "none"; }, 3000);
+    }
+
+    loadSettings();
+  </script>
+
+</body>
+
+</html>

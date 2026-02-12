@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f2f6fb;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(90deg, #1e64c8, #2c8be8);
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.badge {
+  background: orange;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Steps */
+.steps {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  padding: 15px;
+}
+
+.step {
+  padding: 8px 18px;
+  margin: 0 5px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  font-weight: bold;
+}
+
+.step.active {
+  background: #1e64c8;
+  color: white;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+/* Cards */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.upload-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-btn {
+  background: #1e64c8;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.or-text {
+  color: #1e64c8;
+  margin-top: 10px;
+}
+
+/* Results */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+.result-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.green { color: green; }
+.red { color: red; }
+.blue { color: #1e64c8; }
+
+.score {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.good {
+  color: green;
+}
+
+/* CTA */
+.cta {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.cta-btn {
+  background: #1e64c8;
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 14px;
+  opacity: 0.7;
+}
+
+.sidebar li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+}

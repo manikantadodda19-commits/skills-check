@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Skill Gap Analyzer</title>
+  <link rel="stylesheet" href="css/style1.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="page">
+
+    <h1>Resume Skill Gap Analyzer</h1>
+    <p class="subtitle">
+      Upload your resume to analyze your career readiness.
+    </p>
+
+    <div class="upload-card">
+
+      <h2>Upload Your Resume</h2>
+
+      <!-- Resume Upload -->
+      <input type="file" id="resumeFile" accept=".pdf,.doc,.docx">
+
+      <!-- Job Role Selection -->
+      <select id="jobRole">
+        <option value="">Select Target Job Role</option>
+        <option>AI / ML Engineer</option>
+        <option>Data Scientist</option>
+        <option>Software Engineer</option>
+        <option>Cloud Engineer</option>
+        <option>Data Analyst</option>
+      </select>
+
+      <p class="formats">
+        Supported formats: PDF, DOC, DOCX
+      </p>
+
+      <p id="warning" class="warning-text"></p>
+
+      <button id="uploadBtn" onclick="validateAndUpload()">
+        Next → Skill Analysis
+      </button>
+
+      <div id="loading" style="display:none; text-align:center; margin-top:10px;">
+        <p style="color:#8fd0ff;">⏳ Analyzing your resume...</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    async function validateAndUpload() {
+      const fileInput = document.getElementById("resumeFile");
+      const jobRole = document.getElementById("jobRole");
+      const warning = document.getElementById("warning");
+      const loading = document.getElementById("loading");
+      const btn = document.getElementById("uploadBtn");
+
+      warning.textContent = "";
+
+      if (!fileInput.files.length) {
+        warning.textContent = "⚠ Please upload your resume.";
+        return;
+      }
+
+      if (!jobRole.value) {
+        warning.textContent = "⚠ Please select a target job role.";
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ];
+
+      if (!allowedTypes.includes(file.type)) {
+        warning.textContent = "⚠ Only PDF, DOC, DOCX formats allowed.";
+        fileInput.value = "";
+        return;
+      }
+
+      // Show loading, disable button
+      loading.style.display = "block";
+      btn.disabled = true;
+      btn.textContent = "Analyzing...";
+
+      // Upload to backend
+      const formData = new FormData();
+      formData.append("resume", file);
+      formData.append("jobRole", jobRole.value);
+
+      try {
+        const response = await fetch("/upload-resume", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Store session info
+          localStorage.setItem("session_id", data.session_id);
+          localStorage.setItem("jobRole", jobRole.value);
+
+          // Redirect to dashboard
+          window.location.href = "page3.html";
+        } else {
+          warning.textContent = "⚠ " + (data.error || "Upload failed. Please try again.");
+          warning.style.color = "#ff5c5c";
+          loading.style.display = "none";
+          btn.disabled = false;
+          btn.textContent = "Next → Skill Analysis";
+        }
+      } catch (err) {
+        warning.textContent = "⚠ Connection error. Make sure the server is running.";
+        loading.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Next → Skill Analysis";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

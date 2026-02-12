@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Suggested Courses</title>
+  <link rel="stylesheet" href="css/suggested-courses.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li class="active"><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li><a href="learning-roadmap.html">🧭 Learning Roadmap</a></li>
+        <li><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+      <h1>Suggested Courses</h1>
+      <p class="subtitle">Courses to bridge your skill gaps</p>
+
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading courses...</div>
+
+      <div id="content" style="display:none;">
+
+        <!-- Top Course Cards -->
+        <div class="course-grid" id="topCourses"></div>
+
+        <!-- Bottom Listings -->
+        <div class="course-grid" id="bottomCourses"></div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    async function loadData() {
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId) {
+        document.getElementById("loading").textContent = "⚠ No resume uploaded. Please upload first.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/suggested-courses?session_id=${sessionId}`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("loading").textContent = "⚠ " + data.error;
+          return;
+        }
+
+        const courses = data.courses || [];
+        const topGrid = document.getElementById("topCourses");
+        const bottomGrid = document.getElementById("bottomCourses");
+
+        // Top 3 as main cards
+        courses.slice(0, 3).forEach(course => {
+          const div = document.createElement("div");
+          div.className = "course-card";
+          div.innerHTML = `
+        <div class="course-icon">${course.icon || '📚'}</div>
+        <h3>${course.title}</h3>
+        <p>${course.description}</p>
+        <p class="note">${course.platform} · ${course.priority === 'high' ? 'High Priority' : 'Recommended'}</p>
+        <button onclick="window.open('${course.url || '#'}', '_blank')">Start Learning</button>
+      `;
+          topGrid.appendChild(div);
+        });
+
+        // Rest as listing cards
+        courses.slice(3).forEach(course => {
+          const div = document.createElement("div");
+          div.className = "course-card listing";
+          div.innerHTML = `
+        <h4>🔗 ${course.title}</h4>
+        <p class="company">${course.platform}</p>
+        <p>${course.description}</p>
+        <p class="note">${course.reason || ''}</p>
+        <button onclick="window.open('${course.url || '#'}', '_blank')">Start Learning</button>
+      `;
+          bottomGrid.appendChild(div);
+        });
+
+        if (courses.length === 0) {
+          topGrid.innerHTML = '<div class="course-card"><h3>🎉 No courses needed!</h3><p>Your skills are well-aligned with the target role.</p></div>';
+        }
+
+        // Show content
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("content").style.display = "";
+
+      } catch (err) {
+        document.getElementById("loading").textContent = "⚠ Failed to load data. Check server connection.";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

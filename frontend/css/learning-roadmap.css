@@ -1,0 +1,232 @@
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f2a57, #020b1e);
+  color: #ffffff;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===============================
+   LAYOUT
+================================ */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: linear-gradient(180deg, #0a1833, #050d1f);
+  padding: 30px 20px;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  color: #cfd8e3;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+}
+
+.sidebar li.active a {
+  color: #ffffff;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+.main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.main h1 {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #c7d2e4;
+  margin-bottom: 40px;
+}
+
+/* ===============================
+   ROADMAP GRID
+================================ */
+.roadmap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+/* ===============================
+   ROADMAP CARD
+================================ */
+.card {
+  width: 300px;
+  background: linear-gradient(180deg, #12294d, #0a1833);
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card h2 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 14px;
+  color: #c7d2e4;
+}
+
+.card h4 {
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+/* ===============================
+   TEXT STATES
+================================ */
+.check {
+  color: #3ddc97;
+  margin-bottom: 6px;
+}
+
+.cross {
+  color: #ff5c5c;
+  margin-bottom: 6px;
+}
+
+.muted {
+  color: #c7d2e4;
+}
+
+/* ===============================
+   PROGRESS BARS
+================================ */
+.progress {
+  height: 12px;
+  background: #1c2f4d;
+  border-radius: 8px;
+  margin: 8px 0 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 8px;
+}
+
+.green .fill {
+  background: linear-gradient(90deg, #3ddc97, #8fffd1);
+}
+
+.red .fill {
+  background: linear-gradient(90deg, #ff5c5c, #ff9a9a);
+}
+
+.blue .fill {
+  background: linear-gradient(90deg, #4aa3ff, #8fd0ff);
+}
+
+.percent {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.green-text {
+  color: #3ddc97;
+}
+
+.red-text {
+  color: #ff5c5c;
+}
+
+.blue-text {
+  color: #4aa3ff;
+}
+
+.right {
+  float: right;
+}
+
+/* ===============================
+   ARROWS BETWEEN CARDS
+================================ */
+.arrow {
+  font-size: 36px;
+  opacity: 0.6;
+  user-select: none;
+}
+
+/* ===============================
+   CTA BUTTON
+================================ */
+.cta {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #1b73e8, #0b4db8);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cta:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   SCROLLBAR (OPTIONAL)
+================================ */
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: #1b73e8;
+  border-radius: 10px;
+}

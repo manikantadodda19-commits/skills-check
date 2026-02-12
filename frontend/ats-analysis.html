@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ATS Analysis</title>
+  <link rel="stylesheet" href="css/ats-analysis.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li class="active"><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li><a href="learning-roadmap.html">🧭 Learning Roadmap</a></li>
+        <li><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+      <h1>ATS Analysis</h1>
+      <p class="subtitle">Evaluate how well your resume matches ATS requirements</p>
+
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading analysis...</div>
+
+      <div class="grid" id="content" style="display:none;">
+
+        <!-- ATS SCORE -->
+        <div class="card center">
+          <h3>ATS Score</h3>
+          <div class="donut">
+            <span id="atsScore">0%</span>
+          </div>
+          <p class="muted">ATS Score</p>
+          <p id="matchLabel" class="moderate">-</p>
+        </div>
+
+        <!-- RISK ASSESSMENT -->
+        <div class="card">
+          <h3>Risk Assessment</h3>
+          <p class="warning">
+            ⚠ Estimated ATS Rejection: <b id="rejectionPct">0%</b>
+          </p>
+          <p class="muted" id="riskMessage">-</p>
+          <div class="risk-scale">
+            <span>Low</span>
+            <div class="scale">
+              <div class="pointer" id="riskPointer"></div>
+            </div>
+            <span>High</span>
+          </div>
+          <p class="center muted" id="riskLevel">-</p>
+        </div>
+
+        <!-- ATS COMPATIBILITY -->
+        <div class="card">
+          <h3>ATS Compatibility By Section</h3>
+          <table>
+            <tr>
+              <th>Resume Section</th>
+              <th>Score</th>
+              <th>Status</th>
+            </tr>
+            <tbody id="sectionTable"></tbody>
+          </table>
+        </div>
+
+        <!-- KEYWORD DENSITY -->
+        <div class="card">
+          <h3>Keyword Density Analyzer</h3>
+          <div id="keywordList"></div>
+          <div class="tags" id="missingTags">
+            Keywords to Include:
+          </div>
+        </div>
+
+        <!-- JOB ROLE MATCH -->
+        <div class="card">
+          <h3>ATS Match by Job Role</h3>
+          <div id="roleMatches"></div>
+        </div>
+
+        <!-- SIMULATOR -->
+        <div class="card">
+          <h3>ATS Score Improvement Simulator</h3>
+          <p class="muted" id="simKeywords">-</p>
+          <div class="simulator">
+            <span id="simOriginal">Original: 0%</span>
+            <div class="sim-bar">
+              <div class="sim-fill" id="simBar"></div>
+            </div>
+            <span id="simResult">Simulated: 0%</span>
+          </div>
+          <p class="ai" id="simInsight">-</p>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    async function loadData() {
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId) {
+        document.getElementById("loading").textContent = "⚠ No resume uploaded. Please upload first.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/ats-analysis?session_id=${sessionId}`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("loading").textContent = "⚠ " + data.error;
+          return;
+        }
+
+        // ATS Score
+        document.getElementById("atsScore").textContent = data.ats_score + "%";
+        document.getElementById("matchLabel").textContent = data.match_label;
+
+        // Risk Assessment
+        document.getElementById("rejectionPct").textContent = data.risk_assessment.rejection_pct + "%";
+        document.getElementById("riskMessage").textContent = data.risk_assessment.message;
+        document.getElementById("riskLevel").textContent = data.risk_assessment.level;
+        document.getElementById("riskPointer").style.left = data.risk_assessment.pointer_position + "%";
+
+        // Section Scores Table
+        const tableBody = document.getElementById("sectionTable");
+        tableBody.innerHTML = "";
+        data.section_scores.forEach(s => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+        <td>${s.prefix} ${s.section}</td>
+        <td class="${s.color}">${s.score}%</td>
+        <td class="${s.color}">${s.status}</td>
+      `;
+          tableBody.appendChild(row);
+        });
+
+        // Keyword Density
+        const keywordList = document.getElementById("keywordList");
+        keywordList.innerHTML = "";
+        data.keyword_density.forEach(k => {
+          const div = document.createElement("div");
+          div.className = "keyword";
+          div.innerHTML = `
+        <span>${k.keyword}</span>
+        <span class="muted">${k.count} mention${k.count !== 1 ? 's' : ''}</span>
+        <div class="bar ${k.bar_class}"></div>
+        <span class="${k.color}">${k.count > 0 ? '+ ' : '- '}${k.status}</span>
+      `;
+          keywordList.appendChild(div);
+        });
+
+        // Missing Keywords Tags
+        const missingTags = document.getElementById("missingTags");
+        missingTags.innerHTML = "Keywords to Include: ";
+        data.missing_keywords.forEach(kw => {
+          const span = document.createElement("span");
+          span.textContent = kw;
+          missingTags.appendChild(span);
+        });
+
+        // Role Matches
+        const roleMatches = document.getElementById("roleMatches");
+        roleMatches.innerHTML = "";
+        data.role_matches.forEach(r => {
+          const p = document.createElement("p");
+          p.innerHTML = `${r.icon} ${r.role} <b>${r.score}%</b>`;
+          roleMatches.appendChild(p);
+        });
+
+        // Simulator
+        document.getElementById("simKeywords").textContent = "Adding " + data.simulator.keywords_added;
+        document.getElementById("simOriginal").textContent = "Original: " + data.simulator.original_score + "%";
+        document.getElementById("simResult").textContent = "Simulated: " + data.simulator.simulated_score + "%";
+        document.getElementById("simBar").style.width = ((data.simulator.simulated_score / 100) * 100) + "%";
+        document.getElementById("simInsight").innerHTML = "🤖 AI Insight: " + data.simulator.insight;
+
+        // Show content
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("content").style.display = "";
+
+      } catch (err) {
+        document.getElementById("loading").textContent = "⚠ Failed to load data. Check server connection.";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Learning Roadmap</title>
+  <link rel="stylesheet" href="css/learning-roadmap.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li class="active"><a href="learning-roadmap.html">🚀 Learning Roadmap</a></li>
+        <li><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <h1>🚀 Learning Roadmap</h1>
+      <p class="subtitle">90-Day Plan for Career Advancements</p>
+
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading roadmap...</div>
+
+      <div class="roadmap" id="content" style="display:none;"></div>
+
+    </main>
+
+  </div>
+
+  <script>
+    function getProgressColor(progress) {
+      if (progress >= 70) return "green";
+      if (progress >= 40) return "blue";
+      return "red";
+    }
+
+    function getTextColor(progress) {
+      if (progress >= 70) return "green-text";
+      if (progress >= 40) return "blue-text";
+      return "red-text";
+    }
+
+    function renderPhase(phase) {
+      let itemsHtml = "";
+      phase.items.forEach(item => {
+        const icon = item.status === "done" ? "✔" : "☐";
+        const cls = item.status === "done" ? "check" : "";
+        const color = getProgressColor(item.progress);
+        const textColor = getTextColor(item.progress);
+
+        itemsHtml += `
+      <p class="${cls}">${icon} ${item.skill} <span class="right ${textColor}">${item.progress}%</span></p>
+      <div class="progress ${color}">
+        <div class="fill" style="width:${item.progress}%"></div>
+      </div>
+    `;
+      });
+
+      const overallColor = getProgressColor(phase.overall_progress);
+      const overallTextColor = getTextColor(phase.overall_progress);
+
+      return `
+    <div class="card">
+      <h2>${phase.title}</h2>
+      <h3>${phase.subtitle}</h3>
+      ${itemsHtml}
+      <div class="progress ${overallColor}" style="margin-top:12px;">
+        <div class="fill" style="width:${phase.overall_progress}%"></div>
+      </div>
+      <p class="percent ${overallTextColor}">Overall: ${phase.overall_progress}%</p>
+    </div>
+  `;
+    }
+
+    async function loadData() {
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId) {
+        document.getElementById("loading").textContent = "⚠ No resume uploaded. Please upload first.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/learning-roadmap?session_id=${sessionId}`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("loading").textContent = "⚠ " + data.error;
+          return;
+        }
+
+        const content = document.getElementById("content");
+        let html = "";
+
+        html += renderPhase(data.phase_1);
+        html += '<div class="arrow">➜</div>';
+        html += renderPhase(data.phase_2);
+        html += '<div class="arrow">➜</div>';
+        html += renderPhase(data.phase_3);
+
+        content.innerHTML = html;
+
+        // Show content
+        document.getElementById("loading").style.display = "none";
+        content.style.display = "";
+
+      } catch (err) {
+        document.getElementById("loading").textContent = "⚠ Failed to load data. Check server connection.";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

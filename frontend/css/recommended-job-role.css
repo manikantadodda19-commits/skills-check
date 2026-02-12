@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f2a57, #020b1e);
+  color: white;
+  height: 100vh;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  padding: 30px 20px;
+  background: linear-gradient(180deg, #0a1833, #050d1f);
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 14px;
+  opacity: 0.7;
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.subtitle {
+  color: #c7d2e4;
+  margin-bottom: 25px;
+}
+
+/* Cards */
+.card {
+  background: linear-gradient(180deg, #12294d, #0a1833);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  margin-bottom: 25px;
+}
+
+/* Role Card */
+.role-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.robot {
+  font-size: 60px;
+}
+
+/* Reasons */
+.reasons li {
+  margin-bottom: 10px;
+}
+
+/* Tags */
+.tags {
+  margin-top: 15px;
+}
+
+.tag {
+  border: 1px solid #5fa8ff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-right: 8px;
+}
+
+.tag.warn {
+  border-color: #f4c430;
+  color: #f4c430;
+}
+
+/* Jobs */
+.jobs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.job-card {
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.job-card h4 {
+  margin-bottom: 6px;
+}
+
+.company {
+  font-weight: bold;
+}
+
+.muted {
+  color: #b7c4d9;
+}
+
+.job-card button {
+  margin-top: 12px;
+  background: #1b73e8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* AI Insight */
+.insight {
+  color: #8fd0ff;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 14px;
+  opacity: 0.7;
+}
+
+.sidebar li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+}
