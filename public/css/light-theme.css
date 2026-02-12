@@ -1,0 +1,257 @@
+/* ====================================
+   LIGHT MODE THEME OVERRIDE
+   Applied via body.light-mode class
+   ==================================== */
+
+body.light-mode {
+  background: linear-gradient(135deg, #e8edf5, #f5f7fa) !important;
+  color: #1a1a2e !important;
+}
+
+/* Sidebar */
+body.light-mode .sidebar {
+  background: linear-gradient(180deg, #2c3e6b, #1a2a4a) !important;
+}
+
+/* Cards */
+body.light-mode .card,
+body.light-mode .settings-card {
+  background: linear-gradient(180deg, #ffffff, #f0f4f8) !important;
+  color: #1a1a2e !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+  border: 1px solid #e0e6ef;
+}
+
+body.light-mode .card h3,
+body.light-mode .card h4,
+body.light-mode .card h2,
+body.light-mode .settings-card h3 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .card p,
+body.light-mode .settings-card p {
+  color: #4a5568 !important;
+}
+
+/* Main area */
+body.light-mode .main {
+  background: transparent !important;
+}
+
+body.light-mode .main h1 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .subtitle {
+  color: #5a6577 !important;
+}
+
+body.light-mode .muted {
+  color: #6b7280 !important;
+}
+
+/* Upload page */
+body.light-mode .upload-card {
+  background: linear-gradient(180deg, #ffffff, #f0f4f8) !important;
+  color: #1a1a2e !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .upload-card h2 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .page {
+  background: transparent !important;
+}
+
+body.light-mode select,
+body.light-mode input[type="file"] {
+  background: #e8edf5 !important;
+  color: #1a1a2e !important;
+  border: 1px solid #c0c8d8 !important;
+}
+
+/* Table */
+body.light-mode table {
+  color: #1a1a2e !important;
+}
+
+body.light-mode td,
+body.light-mode th {
+  color: #1a1a2e !important;
+  border-bottom: 1px solid #e0e6ef;
+}
+
+/* Buttons */
+body.light-mode button {
+  background: #1b73e8 !important;
+  color: white !important;
+}
+
+body.light-mode button:hover {
+  background: #1557b0 !important;
+}
+
+/* Job cards */
+body.light-mode .job-card {
+  background: #f5f7fa !important;
+  border: 1px solid #e0e6ef !important;
+  color: #1a1a2e !important;
+}
+
+body.light-mode .job-card h4 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .job-card p {
+  color: #4a5568 !important;
+}
+
+/* Course cards */
+body.light-mode .course-card {
+  background: linear-gradient(180deg, #ffffff, #f0f4f8) !important;
+  color: #1a1a2e !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+  border: 1px solid #e0e6ef;
+}
+
+body.light-mode .course-card h3,
+body.light-mode .course-card h4 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .course-card p {
+  color: #4a5568 !important;
+}
+
+/* Tags */
+body.light-mode .tags span,
+body.light-mode .tag {
+  border-color: #d97706 !important;
+  color: #d97706 !important;
+}
+
+/* Role card */
+body.light-mode .role-card {
+  background: linear-gradient(180deg, #1b73e8, #1557b0) !important;
+  color: white !important;
+}
+
+body.light-mode .role-card h2,
+body.light-mode .role-card p {
+  color: white !important;
+}
+
+/* Insight */
+body.light-mode .insight {
+  background: #e8f4fd !important;
+  color: #1a5276 !important;
+  border: 1px solid #b3d7f0;
+}
+
+/* Reasons list */
+body.light-mode .reasons li {
+  color: #1a1a2e !important;
+}
+
+/* Summary list */
+body.light-mode .summary-list li {
+  color: #1a1a2e !important;
+}
+
+/* Progress bars */
+body.light-mode .progress {
+  background: #e0e6ef !important;
+}
+
+/* Setting rows */
+body.light-mode .setting-row {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .setting-row h3 {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .setting-row p {
+  color: #4a5568 !important;
+}
+
+body.light-mode hr {
+  border-color: #e0e6ef !important;
+}
+
+/* Warning text */
+body.light-mode .warning {
+  color: #d97706 !important;
+}
+
+/* Colors override for readability */
+body.light-mode .green { color: #059669 !important; }
+body.light-mode .yellow { color: #d97706 !important; }
+body.light-mode .red { color: #dc2626 !important; }
+body.light-mode .moderate { color: #d97706 !important; }
+body.light-mode .ai { color: #1b73e8 !important; }
+
+/* Donut center text */
+body.light-mode .donut {
+  color: #1a1a2e !important;
+}
+
+/* Circles */
+body.light-mode .circle {
+  color: white !important;
+}
+
+/* Keyword bar labels */
+body.light-mode .keyword span {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .keyword .muted {
+  color: #6b7280 !important;
+}
+
+/* Simulator */
+body.light-mode .sim-bar {
+  background: #e0e6ef !important;
+}
+
+/* Risk scale text */
+body.light-mode .risk-scale span {
+  color: #1a1a2e !important;
+}
+
+/* Note text */
+body.light-mode .note {
+  color: #6b7280 !important;
+}
+
+body.light-mode .company {
+  color: #1b73e8 !important;
+}
+
+/* Formats text */
+body.light-mode .formats {
+  color: #6b7280 !important;
+}
+
+/* Skill titles */
+body.light-mode .skill-title {
+  color: #1a1a2e !important;
+}
+
+body.light-mode .percent {
+  color: #4a5568 !important;
+}
+
+/* Bar group labels */
+body.light-mode .bar-group span {
+  color: #4a5568 !important;
+}
+
+body.light-mode .legend {
+  color: #4a5568 !important;
+}

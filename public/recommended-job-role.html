@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Recommended Job Role</title>
+  <link rel="stylesheet" href="css/recommended-job-role.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li class="active"><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li><a href="learning-roadmap.html">🧭 Learning Roadmap</a></li>
+        <li><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+      <h1>Recommended Job Role</h1>
+      <p class="subtitle">AI-suggested job matches based on your skills</p>
+
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading recommendations...</div>
+
+      <div id="content" style="display:none;">
+
+        <!-- Main Role Card -->
+        <div class="card role-card">
+          <div class="robot">🤖</div>
+          <div>
+            <h2 id="roleName">-</h2>
+            <p class="desc" id="roleDesc">-</p>
+          </div>
+        </div>
+
+        <!-- Why Recommended -->
+        <div class="card">
+          <h3>Why Was This Recommended?</h3>
+          <ul class="reasons" id="reasonsList"></ul>
+          <div class="tags" id="missingTags"></div>
+        </div>
+
+        <!-- Suggested Job Listings -->
+        <div class="card">
+          <h3>Suggested Job Listings</h3>
+          <div class="jobs" id="jobsList"></div>
+        </div>
+
+        <!-- AI Insight -->
+        <div class="card insight" id="roleInsight"></div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    async function loadData() {
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId) {
+        document.getElementById("loading").textContent = "⚠ No resume uploaded. Please upload first.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/recommended-roles?session_id=${sessionId}`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("loading").textContent = "⚠ " + data.error;
+          return;
+        }
+
+        // Role info
+        document.getElementById("roleName").textContent = data.role;
+        document.getElementById("roleDesc").textContent = data.description;
+
+        // Reasons
+        const reasonsList = document.getElementById("reasonsList");
+        reasonsList.innerHTML = "";
+        data.reasons.forEach(r => {
+          const li = document.createElement("li");
+          li.textContent = "✔ " + r;
+          reasonsList.appendChild(li);
+        });
+
+        // Missing skill tags
+        const tags = document.getElementById("missingTags");
+        tags.innerHTML = "";
+        data.missing_tags.forEach((tag, i) => {
+          const span = document.createElement("span");
+          span.className = "tag" + (i === 0 ? " warn" : "");
+          span.textContent = (i === 0 ? "⚠ " : "") + tag;
+          tags.appendChild(span);
+        });
+
+        // Job listings
+        const jobsList = document.getElementById("jobsList");
+        jobsList.innerHTML = "";
+        data.sample_jobs.forEach(job => {
+          const div = document.createElement("div");
+          div.className = "job-card";
+          const searchQuery = encodeURIComponent(job.title + " " + job.company + " careers");
+          div.innerHTML = `
+        <h4>${job.title}</h4>
+        <p class="company">${job.company}</p>
+        <p>${job.location}</p>
+        <p>${job.type}</p>
+        <p class="muted">Posted ${job.posted}</p>
+        <button onclick="window.open('https://www.google.com/search?q=${searchQuery}', '_blank')">View Job</button>
+      `;
+          jobsList.appendChild(div);
+        });
+
+        // AI Insight
+        const topMissing = data.missing_tags.slice(0, 2).join(" or ");
+        document.getElementById("roleInsight").innerHTML =
+          `🤖 <b>AI Insight:</b> Incorporating missing keywords and highlighting a project related to ${topMissing} will increase your ATS compatibility for this role.`;
+
+        // Show content
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("content").style.display = "";
+
+      } catch (err) {
+        document.getElementById("loading").textContent = "⚠ Failed to load data. Check server connection.";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

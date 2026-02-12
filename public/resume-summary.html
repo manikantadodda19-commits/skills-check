@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Comparison</title>
+  <link rel="stylesheet" href="css/resume-summary.css">
+  <link rel="stylesheet" href="css/light-theme.css">
+</head>
+
+<body>
+  <script src="css/settings-loader.js"></script>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Career AI</h2>
+      <ul>
+        <li><a href="page.html">📄 Upload Resume</a></li>
+        <li class="active"><a href="resume-summary.html">📑 Resume Summary</a></li>
+        <li><a href="ats-analysis.html">🧾 ATS Analysis</a></li>
+        <li><a href="recommended-job-role.html">💼 Recommended Job Role</a></li>
+        <li><a href="suggested-courses.html">📚 Suggested Courses</a></li>
+        <li><a href="learning-roadmap.html">🧭 Learning Roadmap</a></li>
+        <li><a href="settings.html">⚙ Settings</a></li>
+      </ul>
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+      <h1>Skill Comparison</h1>
+      <p class="subtitle">Compare your skills based on your resume analysis</p>
+
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading analysis...</div>
+
+      <div class="content-grid" id="content" style="display:none;">
+
+        <!-- Resume Summary -->
+        <div class="card">
+          <h3>Resume Summary</h3>
+          <ul class="summary-list">
+            <li><b>Profile:</b> <span id="profile">-</span></li>
+            <li><b>Experience:</b> <span id="experience">-</span></li>
+            <li><b>Strengths:</b> <span id="strengths">-</span></li>
+            <li><b>Weakness:</b> <span id="weaknesses">-</span></li>
+          </ul>
+        </div>
+
+        <!-- Skill Breakdown -->
+        <div class="card">
+          <h3>Skill Breakdown</h3>
+
+          <!-- Technical -->
+          <div class="skill-row">
+            <p class="skill-title">Technical Skills</p>
+
+            <div class="bar-group">
+              <span>Your Resume</span>
+              <div class="bar">
+                <div class="fill resume" id="techResumeBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="techResumePercent">0%</span>
+            </div>
+
+            <div class="bar-group">
+              <span>Industry Avg.</span>
+              <div class="bar">
+                <div class="fill industry" id="techIndustryBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="techIndustryPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Soft -->
+          <div class="skill-row">
+            <p class="skill-title">Soft Skills</p>
+
+            <div class="bar-group">
+              <span>Your Resume</span>
+              <div class="bar">
+                <div class="fill gold" id="softResumeBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="softResumePercent">0%</span>
+            </div>
+
+            <div class="bar-group">
+              <span>Industry Avg.</span>
+              <div class="bar">
+                <div class="fill industry" id="softIndustryBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="softIndustryPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Projects -->
+          <div class="skill-row">
+            <p class="skill-title">Projects</p>
+
+            <div class="bar-group">
+              <span>Your Resume</span>
+              <div class="bar">
+                <div class="fill resume" id="projResumeBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="projResumePercent">0%</span>
+            </div>
+
+            <div class="bar-group">
+              <span>Industry Avg.</span>
+              <div class="bar">
+                <div class="fill industry" id="projIndustryBar" style="width:0%"></div>
+              </div>
+              <span class="percent" id="projIndustryPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Legend -->
+          <div class="legend">
+            <span class="box resume"></span> Your Resume
+            <span class="box industry"></span> Industry Avg.
+          </div>
+
+        </div>
+
+        <!-- Circular Cards -->
+        <div class="card center">
+          <h4>Technical Skills</h4>
+          <div class="circle tech" id="techCircle">0%</div>
+          <p>Technical Skills</p>
+        </div>
+
+        <div class="card center">
+          <h4>Soft Skills</h4>
+          <div class="circle soft" id="softCircle">0%</div>
+          <p>Soft Skills</p>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    async function loadData() {
+      const sessionId = localStorage.getItem("session_id");
+      if (!sessionId) {
+        document.getElementById("loading").textContent = "⚠ No resume uploaded. Please upload first.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/resume-summary?session_id=${sessionId}`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("loading").textContent = "⚠ " + data.error;
+          return;
+        }
+
+        // Populate summary
+        document.getElementById("profile").textContent = data.profile;
+        document.getElementById("experience").textContent = data.experience_level;
+        document.getElementById("strengths").textContent = data.strengths;
+        document.getElementById("weaknesses").textContent = data.weaknesses;
+
+        // Populate bars
+        document.getElementById("techResumeBar").style.width = data.technical.resume + "%";
+        document.getElementById("techResumePercent").textContent = data.technical.resume + "%";
+        document.getElementById("techIndustryBar").style.width = data.technical.industry + "%";
+        document.getElementById("techIndustryPercent").textContent = data.technical.industry + "%";
+
+        document.getElementById("softResumeBar").style.width = data.soft.resume + "%";
+        document.getElementById("softResumePercent").textContent = data.soft.resume + "%";
+        document.getElementById("softIndustryBar").style.width = data.soft.industry + "%";
+        document.getElementById("softIndustryPercent").textContent = data.soft.industry + "%";
+
+        document.getElementById("projResumeBar").style.width = data.projects.resume + "%";
+        document.getElementById("projResumePercent").textContent = data.projects.resume + "%";
+        document.getElementById("projIndustryBar").style.width = data.projects.industry + "%";
+        document.getElementById("projIndustryPercent").textContent = data.projects.industry + "%";
+
+        // Circles
+        document.getElementById("techCircle").textContent = data.technical.resume + "%";
+        document.getElementById("softCircle").textContent = data.soft.resume + "%";
+
+        // Show content
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("content").style.display = "";
+
+      } catch (err) {
+        document.getElementById("loading").textContent = "⚠ Failed to load data. Check server connection.";
+      }
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

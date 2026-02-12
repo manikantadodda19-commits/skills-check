@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #0f2a57, #020b1e);
+  color: white;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  padding: 30px 20px;
+  background: linear-gradient(180deg, #0a1833, #050d1f);
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 14px;
+  opacity: 0.7;
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px;
+}
+
+.subtitle {
+  color: #c7d2e4;
+  margin-bottom: 30px;
+}
+
+/* Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+/* Cards */
+.card {
+  background: linear-gradient(180deg, #12294d, #0a1833);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.card h3 {
+  margin-bottom: 15px;
+}
+
+/* Resume summary */
+.summary-list li {
+  margin-bottom: 10px;
+}
+
+.speaker {
+  color: #5fa8ff;
+}
+
+/* Skill breakdown */
+.skill-row {
+  margin-bottom: 20px;
+}
+
+.skill-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.bar-group {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.bar {
+  height: 12px;
+  background: #1c2f4d;
+  border-radius: 10px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.resume {
+  background: linear-gradient(90deg, #1b73e8, #5fa8ff);
+}
+
+.industry {
+  background: linear-gradient(90deg, #4aa3ff, #8fd0ff);
+}
+
+.gold {
+  background: linear-gradient(90deg, #f4c430, #ffd36a);
+}
+
+.percent {
+  text-align: right;
+}
+
+/* Legend */
+.legend {
+  margin-top: 10px;
+  color: #c7d2e4;
+}
+
+.box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 6px;
+}
+
+/* Center cards */
+.center {
+  text-align: center;
+}
+
+.circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.circle.tech {
+  background: conic-gradient(#3ddc97 78%, #1c2f4d 0);
+}
+
+.circle.soft {
+  background: conic-gradient(#f4c430 70%, #1c2f4d 0);
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 14px;
+  opacity: 0.7;
+}
+
+.sidebar li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+.sidebar li.active {
+  background: #1b73e8;
+  border-radius: 6px;
+  opacity: 1;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+}
