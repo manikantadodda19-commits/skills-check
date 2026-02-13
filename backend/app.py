@@ -21,7 +21,15 @@ app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = os.path.join("/tmp", "uploads") if os.environ.get("VERCEL") else os.path.join(BASE_DIR, "uploads")
-FRONTEND_FOLDER = os.path.join(BASE_DIR, "..", "public")
+
+# Determine frontend folder path - works both locally and on Vercel
+if os.environ.get("VERCEL"):
+    # On Vercel, files are in /var/task/
+    PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+    FRONTEND_FOLDER = os.path.join(PROJECT_ROOT, "public")
+else:
+    # Locally
+    FRONTEND_FOLDER = os.path.join(BASE_DIR, "..", "public")
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
