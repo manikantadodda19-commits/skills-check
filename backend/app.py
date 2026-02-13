@@ -41,9 +41,36 @@ sessions = {}
 #  Static File Serving
 # ============================================================
 
+# Debug endpoint to check paths in Vercel environment
+@app.route("/debug/paths")
+def debug_paths():
+    """Debug endpoint to see what paths are available."""
+    import glob
+    return jsonify({
+        "BASE_DIR": BASE_DIR,
+        "FRONTEND_FOLDER": FRONTEND_FOLDER,
+        "FRONTEND_FOLDER_exists": os.path.exists(FRONTEND_FOLDER),
+        "FRONTEND_FOLDER_contents": os.listdir(FRONTEND_FOLDER) if os.path.exists(FRONTEND_FOLDER) else "NOT FOUND",
+        "current_working_dir": os.getcwd(),
+        "vercel_env": os.environ.get("VERCEL"),
+        "all_files_in_current_dir": os.listdir(os.getcwd()),
+        "page_html_exists": os.path.exists(os.path.join(FRONTEND_FOLDER, "page.html"))
+    })
+
 @app.route("/")
 def home():
-    return send_from_directory(FRONTEND_FOLDER, "page.html")
+    """Serve the main landing page."""
+    file_path = os.path.join(FRONTEND_FOLDER, "page.html")
+    if os.path.exists(file_path):
+        return send_from_directory(FRONTEND_FOLDER, "page.html")
+    else:
+        return jsonify({
+            "error": "page.html not found",
+            "searched_path": file_path,
+            "FRONTEND_FOLDER": FRONTEND_FOLDER,
+            "exists": os.path.exists(FRONTEND_FOLDER),
+            "hint": "Visit /debug/paths to see environment details"
+        }), 404
 
 
 @app.route("/<path:filename>")
@@ -51,7 +78,15 @@ def serve_file(filename):
     """Serve HTML, CSS, JS, and image files from the frontend folder."""
     allowed_extensions = (".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".svg", ".ico", ".gif", ".webp")
     if filename.endswith(allowed_extensions):
-        return send_from_directory(FRONTEND_FOLDER, filename)
+        file_path = os.path.join(FRONTEND_FOLDER, filename)
+        if os.path.exists(file_path):
+            return send_from_directory(FRONTEND_FOLDER, filename)
+        else:
+            return jsonify({
+                "error": f"File '{filename}' not found",
+                "searched_path": file_path,
+                "hint": "Visit /debug/paths to see what files are available"
+            }), 404
     return "File not found", 404
 
 
