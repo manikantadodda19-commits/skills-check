@@ -66,7 +66,7 @@ body {
   background: linear-gradient(180deg, #12294d, #0a1833);
   border-radius: 12px;
   padding: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .card h3 {
@@ -164,6 +164,7 @@ body {
 .circle.soft {
   background: conic-gradient(#f4c430 70%, #1c2f4d 0);
 }
+
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -172,20 +173,28 @@ body {
 .sidebar li {
   padding: 14px;
   opacity: 0.7;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+  background: rgba(27, 115, 232, 0.2);
 }
 
 .sidebar li a {
   text-decoration: none;
   color: white;
   display: block;
+  transition: color 0.3s ease;
+}
+
+.sidebar li a:hover {
+  color: #8fd0ff;
 }
 
 .sidebar li.active {
   background: #1b73e8;
   border-radius: 6px;
-  opacity: 1;
-}
-
-.sidebar li:hover {
   opacity: 1;
 }

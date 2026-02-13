@@ -55,7 +55,7 @@ body {
   background: linear-gradient(180deg, #12294d, #0a1833);
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .center {
@@ -108,21 +108,30 @@ table {
   border-collapse: collapse;
 }
 
-td, th {
+td,
+th {
   padding: 8px;
 }
 
 /* Keywords */
 .keyword {
   display: grid;
-  grid-template-columns: 120px 90px 1fr 90px;
+  grid-template-columns: minmax(100px, auto) minmax(80px, auto) 1fr minmax(80px, 100px);
   gap: 8px;
   margin-bottom: 10px;
+  align-items: center;
+}
+
+.keyword>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bar {
   height: 10px;
   border-radius: 6px;
+  align-self: center;
 }
 
 .bar.good {
@@ -134,11 +143,20 @@ td, th {
 }
 
 /* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  align-items: center;
+}
+
 .tags span {
   border: 1px solid #f4c430;
   padding: 4px 10px;
   border-radius: 12px;
-  margin-left: 6px;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* Simulator */
@@ -163,12 +181,31 @@ td, th {
 }
 
 /* Colors */
-.green { color: #3ddc97; }
-.yellow { color: #f4c430; }
-.red { color: #ff5c5c; }
-.muted { color: #c7d2e4; }
-.moderate { color: #f4c430; }
-.ai { color: #8fd0ff; margin-top: 10px; }
+.green {
+  color: #3ddc97;
+}
+
+.yellow {
+  color: #f4c430;
+}
+
+.red {
+  color: #ff5c5c;
+}
+
+.muted {
+  color: #c7d2e4;
+}
+
+.moderate {
+  color: #f4c430;
+}
+
+.ai {
+  color: #8fd0ff;
+  margin-top: 10px;
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -177,12 +214,24 @@ td, th {
 .sidebar li {
   padding: 14px;
   opacity: 0.7;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+  background: rgba(27, 115, 232, 0.2);
 }
 
 .sidebar li a {
   text-decoration: none;
   color: white;
   display: block;
+  transition: color 0.3s ease;
+}
+
+.sidebar li a:hover {
+  color: #8fd0ff;
 }
 
 .sidebar li.active {
@@ -190,8 +239,3 @@ td, th {
   border-radius: 6px;
   opacity: 1;
 }
-
-.sidebar li:hover {
-  opacity: 1;
-}
-

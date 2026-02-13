@@ -6,6 +6,7 @@
   <title>Skill Comparison</title>
   <link rel="stylesheet" href="css/resume-summary.css">
   <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -14,7 +15,7 @@
   <div class="layout">
 
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar animate-slideInLeft">
       <h2>Career AI</h2>
       <ul>
         <li><a href="page.html">📄 Upload Resume</a></li>
@@ -31,10 +32,13 @@
     <!-- Main -->
     <main class="main">
 
-      <h1>Skill Comparison</h1>
-      <p class="subtitle">Compare your skills based on your resume analysis</p>
+      <h1 class="animate-fadeInDown">Skill Comparison</h1>
+      <p class="subtitle animate-fadeIn delay-1">Compare your skills based on your resume analysis</p>
 
-      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading analysis...</div>
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">
+        <div class="spinner"></div>
+        <p style="margin-top:10px;">⏳ Loading analysis...</p>
+      </div>
 
       <div class="content-grid" id="content" style="display:none;">
 

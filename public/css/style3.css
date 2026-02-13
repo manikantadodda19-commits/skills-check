@@ -33,6 +33,13 @@ body {
 .sidebar li {
   padding: 14px;
   opacity: 0.7;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+  background: rgba(27, 115, 232, 0.2);
 }
 
 .sidebar li.active {
@@ -62,7 +69,8 @@ body {
   padding: 30px;
   background: linear-gradient(180deg, #12294d, #0a1833);
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card h3 {
@@ -78,7 +86,12 @@ body {
 .card-icon {
   width: 48px;
   height: 48px;
-  filter: drop-shadow(0 0 8px rgba(79,163,255,0.6));
+  filter: drop-shadow(0 0 8px rgba(79, 163, 255, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .arrow {
@@ -86,38 +99,26 @@ body {
   bottom: 20px;
   right: 25px;
   font-size: 22px;
+  transition: transform 0.3s ease;
 }
+
 .card.clickable {
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card.clickable:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 45px rgba(0,0,0,0.7);
-}
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(31, 115, 232, 0.2);
 }
 
-.sidebar li {
-  padding: 14px;
-  opacity: 0.7;
-}
 
 .sidebar li a {
   text-decoration: none;
   color: white;
   display: block;
+  transition: color 0.3s ease;
 }
 
-.sidebar li.active {
-  background: #1b73e8;
-  border-radius: 6px;
-  opacity: 1;
-}
-
-.sidebar li:hover {
-  opacity: 1;
+.sidebar li a:hover {
+  color: #8fd0ff;
 }

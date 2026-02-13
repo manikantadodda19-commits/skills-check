@@ -6,6 +6,7 @@
   <title>Resume Skill Gap Analyzer</title>
   <link rel="stylesheet" href="css/style1.css">
   <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -13,12 +14,12 @@
 
   <div class="page">
 
-    <h1>Resume Skill Gap Analyzer</h1>
-    <p class="subtitle">
+    <h1 class="animate-fadeInDown">Resume Skill Gap Analyzer</h1>
+    <p class="subtitle animate-fadeIn delay-1">
       Upload your resume to analyze your career readiness.
     </p>
 
-    <div class="upload-card">
+    <div class="upload-card animate-fadeInUp delay-2">
 
       <h2>Upload Your Resume</h2>
 
@@ -41,12 +42,13 @@
 
       <p id="warning" class="warning-text"></p>
 
-      <button id="uploadBtn" onclick="validateAndUpload()">
+      <button id="uploadBtn" class="hover-glow ripple" onclick="validateAndUpload()">
         Next → Skill Analysis
       </button>
 
       <div id="loading" style="display:none; text-align:center; margin-top:10px;">
-        <p style="color:#8fd0ff;">⏳ Analyzing your resume...</p>
+        <div class="spinner"></div>
+        <p style="color:#8fd0ff; margin-top:10px;">⏳ Analyzing your resume...</p>
       </div>
 
     </div>

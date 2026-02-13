@@ -36,7 +36,7 @@ h1 {
   padding: 40px;
   border-radius: 16px;
   background: linear-gradient(180deg, #12294d, #0a1833);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
 }
 
 .upload-card h2 {
@@ -54,6 +54,22 @@ h1 {
   border: 1px solid #243a63;
   border-radius: 8px;
   color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.upload-card input:hover,
+.upload-card select:hover {
+  border-color: #3a5a93;
+  background: #12254a;
+}
+
+.upload-card input:focus,
+.upload-card select:focus {
+  outline: none;
+  border-color: #1b73e8;
+  box-shadow: 0 0 0 3px rgba(31, 115, 232, 0.2);
+  background: #12254a;
 }
 
 .upload-card select option {
@@ -84,8 +100,20 @@ button {
   cursor: pointer;
   color: white;
   background: linear-gradient(180deg, #1b73e8, #0b4db8);
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(31, 115, 232, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
 }

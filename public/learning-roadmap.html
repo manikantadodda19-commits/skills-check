@@ -6,6 +6,7 @@
   <title>Learning Roadmap</title>
   <link rel="stylesheet" href="css/learning-roadmap.css">
   <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -14,7 +15,7 @@
   <div class="layout">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar animate-slideInLeft">
       <h2>Career AI</h2>
       <ul>
         <li><a href="page.html">📄 Upload Resume</a></li>
@@ -30,10 +31,13 @@
     <!-- MAIN CONTENT -->
     <main class="main">
 
-      <h1>🚀 Learning Roadmap</h1>
-      <p class="subtitle">90-Day Plan for Career Advancements</p>
+      <h1 class="animate-fadeInDown">🚀 Learning Roadmap</h1>
+      <p class="subtitle animate-fadeIn delay-1">90-Day Plan for Career Advancements</p>
 
-      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">⏳ Loading roadmap...</div>
+      <div id="loading" style="text-align:center; padding:40px; color:#8fd0ff;">
+        <div class="spinner"></div>
+        <p style="margin-top:10px;">⏳ Loading roadmap...</p>
+      </div>
 
       <div class="roadmap" id="content" style="display:none;"></div>
 

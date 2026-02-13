@@ -55,6 +55,13 @@ body {
   color: #cfd8e3;
   text-decoration: none;
   font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 .sidebar li:hover {
